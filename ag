@@ -1,0 +1,192 @@
+local L_152_
+	local L_153_ = game.Players.LocalPlayer
+	IYMouse = L_153_:GetMouse()
+	IYMouse.KeyDown:connect(
+            function(L_154_arg0)
+		if L_154_arg0 == "z" then
+			if L_152_ then
+				L_152_ = false
+				fly()
+			else
+				L_152_ = true
+				NOFLY()
+			end
+		end
+	end
+        )
+	for L_155_forvar0, L_156_forvar1 in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if L_156_forvar1:IsA("BasePart") and L_156_forvar1.CanCollide == true then
+			L_156_forvar1.CanCollide = false
+		end
+	end
+	FLYING = false
+	QEfly = true
+	iyflyspeed = 7
+	vehicleflyspeed = 7
+	function sFLY(L_157_arg0)
+		repeat
+			wait()
+		until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and
+                game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+		repeat
+			wait()
+		until IYMouse
+		local L_158_ = game.Players.LocalPlayer.Character.LowerTorso
+		local L_159_ = {
+			F = 0,
+			B = 0,
+			L = 0,
+			R = 0,
+			Q = 0,
+			E = 0
+		}
+		local L_160_ = {
+			F = 0,
+			B = 0,
+			L = 0,
+			R = 0,
+			Q = 0,
+			E = 0
+		}
+		local L_161_ = 5
+		local function L_162_func()
+			FLYING = true
+			local L_163_ = Instance.new("BodyGyro", L_158_)
+			local L_164_ = Instance.new("BodyVelocity", L_158_)
+			L_163_.P = 9e4
+			L_163_.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+			L_163_.cframe = L_158_.CFrame
+			L_164_.velocity = Vector3.new(0, 0, 0)
+			L_164_.maxForce = Vector3.new(9e9, 9e9, 9e9)
+			spawn(
+                    function()
+				repeat
+					wait()
+					if not L_157_arg0 and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+						game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand =
+                                    true
+					end
+					if L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0 then
+						L_161_ = 50
+					elseif not (L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0) and L_161_ ~= 0 then
+						L_161_ = 0
+					end
+					if L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0 then
+						L_164_.velocity =
+                                    (workspace.CurrentCamera.CoordinateFrame.lookVector * (L_159_.F + L_159_.B) +
+                                    workspace.CurrentCamera.CoordinateFrame *
+                                        CFrame.new(L_159_.L + L_159_.R, (L_159_.F + L_159_.B + L_159_.Q + L_159_.E) * 0.2, 0).p -
+                                    workspace.CurrentCamera.CoordinateFrame.p) *
+                                    L_161_
+						L_160_ = {
+							F = L_159_.F,
+							B = L_159_.B,
+							L = L_159_.L,
+							R = L_159_.R
+						}
+					elseif L_159_.L + L_159_.R == 0 and L_159_.F + L_159_.B == 0 and L_159_.Q + L_159_.E == 0 and L_161_ ~= 0 then
+						L_164_.velocity =
+                                    (workspace.CurrentCamera.CoordinateFrame.lookVector * (L_160_.F + L_160_.B) +
+                                    workspace.CurrentCamera.CoordinateFrame *
+                                        CFrame.new(L_160_.L + L_160_.R, (L_160_.F + L_160_.B + L_159_.Q + L_159_.E) * 0.2, 0).p -
+                                    workspace.CurrentCamera.CoordinateFrame.p) *
+                                    L_161_
+					else
+						L_164_.velocity = Vector3.new(0, 0, 0)
+					end
+					L_163_.cframe = workspace.CurrentCamera.CoordinateFrame
+				until not FLYING
+				L_159_ = {
+					F = 0,
+					B = 0,
+					L = 0,
+					R = 0,
+					Q = 0,
+					E = 0
+				}
+				L_160_ = {
+					F = 0,
+					B = 0,
+					L = 0,
+					R = 0,
+					Q = 0,
+					E = 0
+				}
+				L_161_ = 0
+				L_163_:destroy()
+				L_164_:destroy()
+				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+					game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+				end
+			end
+                )
+		end
+		IYMouse.KeyDown:connect(
+                function(L_165_arg0)
+			if L_165_arg0:lower() == "w" then
+				if L_157_arg0 then
+					L_159_.F = vehicleflyspeed
+				else
+					L_159_.F = iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "s" then
+				if L_157_arg0 then
+					L_159_.B = -vehicleflyspeed
+				else
+					L_159_.B = -iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "a" then
+				if L_157_arg0 then
+					L_159_.L = -vehicleflyspeed
+				else
+					L_159_.L = -iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "d" then
+				if L_157_arg0 then
+					L_159_.R = vehicleflyspeed
+				else
+					L_159_.R = iyflyspeed
+				end
+			elseif QEfly and L_165_arg0:lower() == "e" then
+				if L_157_arg0 then
+					L_159_.Q = vehicleflyspeed * 2
+				else
+					L_159_.Q = iyflyspeed * 2
+				end
+			elseif QEfly and L_165_arg0:lower() == "q" then
+				if L_157_arg0 then
+					L_159_.E = -vehicleflyspeed * 2
+				else
+					L_159_.E = -iyflyspeed * 2
+				end
+			end
+		end
+            )
+		IYMouse.KeyUp:connect(
+                function(L_166_arg0)
+			if L_166_arg0:lower() == "w" then
+				L_159_.F = 0
+			elseif L_166_arg0:lower() == "s" then
+				L_159_.B = 0
+			elseif L_166_arg0:lower() == "a" then
+				L_159_.L = 0
+			elseif L_166_arg0:lower() == "d" then
+				L_159_.R = 0
+			elseif L_166_arg0:lower() == "e" then
+				L_159_.Q = 0
+			elseif L_166_arg0:lower() == "q" then
+				L_159_.E = 0
+			end
+		end
+            )
+		L_162_func()
+	end
+	function NOFLY()
+		FLYING = false
+		game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = true
+	end
+	function fly()
+		NOFLY()
+		wait()
+		sFLY()
+	end
