@@ -1,0 +1,26 @@
+local L_419_ = Instance.new("Animation");
+	function stopTracks()
+		for L_420_forvar0, L_421_forvar1 in next, game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPlayingAnimationTracks(
+    
+        ) do
+			if (L_421_forvar1.Animation.AnimationId:match("rbxassetid")) then
+				L_421_forvar1:Stop();
+			end;
+		end;
+	end;
+	function loadAnimation(L_422_arg0)
+		if L_419_.AnimationId == L_422_arg0 then
+			L_419_.AnimationId = "1";
+		else
+			L_419_.AnimationId = L_422_arg0;
+			local L_423_ =
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):LoadAnimation(
+                L_419_
+            );
+			L_423_:Play();
+		end;
+	end;
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-626.288757, 7.99984694, -772.322632, -0.997374237, -1.67662592e-10, -0.0724197701, -1.00076274e-10, 1, -9.36886457e-10, 0.0724197701, -9.27178945e-10, -0.997374237)
+	loadAnimation("rbxassetid://3152378852");
+	wait(1.2)
+	stopTracks();
